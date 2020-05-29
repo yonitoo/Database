@@ -1,0 +1,101 @@
+﻿  ColumnType.cpp
+  Database.cpp
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(23,14): error C2059: syntax error: 'export'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(23,79): error C2238: unexpected token(s) preceding ';'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(24,40): error C2143: syntax error: missing ',' before '-'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(26,66): error C2061: syntax error: identifier 'columnName'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(29,28): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(31,28): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(32,58): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(37,34): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.h(39,27): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(71,33): error C2734: 'input': 'const' object must be initialized if not 'extern'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(72,45): error C2664: 'std::basic_istream<char,std::char_traits<char>> &std::basic_istream<char,std::char_traits<char>>::getline(_Elem *,std::streamsize,_Elem)': cannot convert argument 1 from 'const char [20]' to '_Elem *'
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(72,30): message : Conversion loses qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\istream(441,39): message : see declaration of 'std::basic_istream<char,std::char_traits<char>>::getline'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(78,21): error C2450: switch expression of type 'const char [20]' is illegal
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(77,29): message : Integral expression required
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(79,37): error C2440: 'type cast': cannot convert from 'const char [10]' to 'int'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(79,26): message : There is no context in which this conversion is possible
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(79,21): error C2046: illegal case
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(80,57): error C2664: 'std::basic_istream<char,std::char_traits<char>> &std::basic_istream<char,std::char_traits<char>>::getline(_Elem *,std::streamsize,_Elem)': cannot convert argument 1 from 'const char [20]' to '_Elem *'
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(80,42): message : Conversion loses qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\istream(441,39): message : see declaration of 'std::basic_istream<char,std::char_traits<char>>::getline'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(81,41): error C2440: 'type cast': cannot convert from 'const char [14]' to 'int'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(81,26): message : There is no context in which this conversion is possible
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(81,21): error C2046: illegal case
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(82,57): error C2664: 'std::basic_istream<char,std::char_traits<char>> &std::basic_istream<char,std::char_traits<char>>::getline(_Elem *,std::streamsize,_Elem)': cannot convert argument 1 from 'const char [20]' to '_Elem *'
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(82,42): message : Conversion loses qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\istream(441,39): message : see declaration of 'std::basic_istream<char,std::char_traits<char>>::getline'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(83,32): error C2440: 'type cast': cannot convert from 'const char [5]' to 'int'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(83,26): message : There is no context in which this conversion is possible
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(83,21): error C2046: illegal case
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(89,21): error C2450: switch expression of type 'const char [20]' is illegal
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(88,29): message : Integral expression required
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(90,37): error C2440: 'type cast': cannot convert from 'const char [10]' to 'int'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(90,26): message : There is no context in which this conversion is possible
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(90,21): error C2046: illegal case
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(91,57): error C2664: 'std::basic_istream<char,std::char_traits<char>> &std::basic_istream<char,std::char_traits<char>>::getline(_Elem *,std::streamsize,_Elem)': cannot convert argument 1 from 'const char [20]' to '_Elem *'
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(91,42): message : Conversion loses qualifiers
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\istream(441,39): message : see declaration of 'std::basic_istream<char,std::char_traits<char>>::getline'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(92,32): error C2440: 'type cast': cannot convert from 'const char [5]' to 'int'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(92,26): message : There is no context in which this conversion is possible
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(92,21): error C2046: illegal case
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(100,16): error C2589: 'export': illegal token on right side of '::'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(100,22): error C2062: type 'unknown-type' unexpected
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(101,1): error C2143: syntax error: missing ';' before '{'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(101,1): error C2447: '{': missing function header (old-style formal list?)
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(104,43): error C2143: syntax error: missing ',' before '-'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(110,68): error C2061: syntax error: identifier 'columnName'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(117,10): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(123,10): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(128,60): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(145,10): error C2061: syntax error: identifier 'Field'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Database.cpp(151,10): error C2061: syntax error: identifier 'Field'
+  Double.cpp
+  Integer.cpp
+  main.cpp
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\main.cpp(3,10): fatal error C1083: Cannot open include file: 'Hall.h': No such file or directory
+  String.cpp
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\String.h(24,42): error C2555: 'String::getVector': overriding virtual function return type differs and is not covariant from 'ColumnType::getVector'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\ColumnType.h(26): message : see declaration of 'ColumnType::getVector'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\String.cpp(114,35): error C2679: binary '=': no operator found which takes a right-hand operand of type 'std::string' (or there is no acceptable conversion)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\vector(1175,13): message : could be 'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::initializer_list<_Ty>)'
+          with
+          [
+              _Ty=std::string
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\vector(1167,13): message : or       'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(const std::vector<std::string,std::allocator<std::string>> &)'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\vector(664,13): message : or       'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::vector<std::string,std::allocator<std::string>> &&) noexcept(<expr>)'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\String.cpp(114,35): message : while trying to match the argument list '(std::vector<std::string,std::allocator<std::string>>, std::string)'
+  Table.cpp
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\String.h(24,42): error C2555: 'String::getVector': overriding virtual function return type differs and is not covariant from 'ColumnType::getVector'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\ColumnType.h(26): message : see declaration of 'ColumnType::getVector'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(133,5): error C2059: syntax error: '}'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(137,91): error C2143: syntax error: missing ';' before 'this'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(137,111): error C2146: syntax error: missing ')' before identifier 'j'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(137,107): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(137,112): error C2059: syntax error: ';'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(137,114): error C2059: syntax error: ')'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(139,45): error C2059: syntax error: ';'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(143,1): error C2059: syntax error: '}'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(143,1): error C2143: syntax error: missing ';' before '}'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(146,1): error C2143: syntax error: missing ';' before '{'
+C:\Users\Yoan\Desktop\cpp\OOP\Projects\Database\Table.cpp(146,1): error C2447: '{': missing function header (old-style formal list?)
+  Generating Code...

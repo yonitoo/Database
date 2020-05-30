@@ -2,6 +2,7 @@
 #define DATABASE_CPP
 
 #include <fstream>
+#include <iterator>
 #include "Database.h"
 
 void Database::copy(const Database& other)
@@ -23,8 +24,8 @@ void Database::erase()
 
 Database::Database() : database()
 {
-
 }
+
 Database& Database::operator=(const Database& other)
 {
     if(this != &other)
@@ -41,8 +42,24 @@ Database::~Database()
 }
 
 Database& Database::import(const std::string& fileName)///char* file name + dobavq se v kataloga
-{
-
+{/*
+    std::fstream file;
+    file.open(fileName.c_str(), std::fstream::out | std::fstream::trunc);
+    if (file.is_open())
+    {
+        Table table;
+        table.read(file);
+        this->database.push_back(&table);
+    }
+    file.close();
+    std::string catalogueFile = "Catalogue.txt";
+    file.open(catalogueFile.c_str(), std::fstream::in);
+    if (file.is_open())
+    {
+        file.write(;
+        return;
+    }*/
+    return *this;
 }
 
 void Database::showtables()
@@ -75,7 +92,7 @@ void Database::print(const std::string& tableName) const
     }
 }
 
-void Database::export(const std::string& tableName, const std::string& fileName)///zapisva q vuv file
+void Database::exportt(const std::string& tableName, const std::string& fileName)
 {
     std::fstream file;
     file.open(fileName.c_str(), std::fstream::out | std::fstream::trunc);
@@ -93,78 +110,229 @@ void Database::export(const std::string& tableName, const std::string& fileName)
     file.close();
 }
 
-void Database::select(unsigned int columnN, const std::string& value,
-    const std::string& tableName)///printva vs redove, chiito koloni imat value
+std::vector<unsigned int> Database::select(unsigned int columnN, const std::string& value,
+    const std::string& tableName)
 {
+    std::vector<unsigned int> indices;
+    unsigned int tableIndex;
     for (unsigned int i = 0; i < this->database.size(); i++)
     {
         if (this->database[i]->getName() == tableName)
         {
-            for (unsigned int j = 0; j < this->database[i]->getRows() ; j++)
+            tableIndex = i;
+            break;
+        }
+    }
+    indices.push_back(tableIndex);
+
+    for (unsigned int j = 0; j < this->database[tableIndex]->getRows().size(); j++)
+    {
+        if (this->database[tableIndex]->getRows()[j][columnN] == value)
+        {
+            indices.push_back(j);
+        }
+    }
+
+    for (unsigned int i = 0; i < indices.size(); i++)
+    {
+        for (unsigned int j = 0; j < this->database[tableIndex]->getRows()[indices[i]].size(); j++)
+        {
+            std::cout << this->database[tableIndex]->getRows()[indices[i]][j];
+            if (j < this->database[tableIndex]->getRows()[indices[i]].size() - 1)
             {
-                if ()
-                {
-                    this->database[i]->getRows()[j].print();
-                }
+                std::cout << " ";
             }
-                this->database[i]->
-            return;
         }
+        std::cout << std::endl;
     }
+    return indices;
 }
 
-Table& Database::addColumn(const std::string& tableName, const std::string& columnName,
-    const std::string& columnType)
+Table* Database::addColumn(const std::string& tableName, const std::string& columnName,
+    const ColumnType& columnType)
 {
     for (unsigned int i = 0; i < this->database.size(); i++)
     {
         if (this->database[i]->getName() == tableName)
         {
-            this->database[i]->
+            this->database[i]->addColumn(columnName, columnType);
+            return this->database[i];
         }
+    }
+    return nullptr;
+}
+
+Table* Database::update(const std::string& tableName, unsigned int columnSearch,
+    const std::string& valueSearch, unsigned int columnTarget, const std::string& valueTarget)
+{
+    std::vector<unsigned int> indices = select(columnSearch, valueSearch, tableName);///vrushta mi indeksite
+    for (unsigned int i = 1; i < indices.size(); i++)
+    {
+        this->database[indices[0]]->setValueAt(indices[i], columnTarget, valueTarget);
+    }
+    return this->database[indices[0]];
+}
+
+Table* Database::deletee(const std::string& tableName, unsigned int columnSearch,
+    const std::string& valueSearch) ///trie redovete, sudurzhashti value v kolona columnSearch
+{
+    std::vector<unsigned int> indices = select(columnSearch, valueSearch, tableName);
+    for (unsigned i = 1; i < indices.size(); i++)
+    {
+        this->database[indices[0]]->getRows().erase(this->database[indices[0]]->getRows().begin() + indices[i]);
+    }
+    return this->database[indices[0]];
+}
+
+Table* Database::insert(const std::string& tableName, const std::vector<std::string>& rowValues)
+{
+    for (unsigned int i = 0; i < this->database.size(); i++)
+    {
+        if (this->database[i]->getName() == tableName)
+        {
+            this->database[i]->addRow(rowValues);
+            return this->database[i];
+        }
+    }
+    return nullptr;
+}
+
+Table* Database::innerjoin(const Table& table1, const std::vector<ColumnType*>& table1Columns, 
+                          Table table2, const std::vector<ColumnType*>& table2Columns)
+{
+    bool bool1 = false;
+    bool bool2 = false;
+    for (unsigned int i = 0; i < this->database.size(); i++)
+    {
+        if (this->database[i]->getName() == table1.getName())
+        {
+            bool1 = true;
+        }
+        if (this->database[i]->getName() == table2.getName())
+        {
+            bool1 = false;
+        }
+    }
+    if (!bool1 || !bool2)
+    {
+        return nullptr;
+    }
+
+    std::vector<bool> isMutualFirst;
+    std::vector<bool> isMutualSecond;
+    unsigned int index1 = 0, index2 = 0;
+    for (unsigned int i = 0; i < table1.getTableData()[0]->getSize(); i++)
+    {
+        isMutualFirst.push_back(false);
+        isMutualSecond.push_back(false);
+    }
+
+    for (unsigned int i = 0; i < table1Columns.size(); i++)
+    {
+        for (unsigned int j = 0; j < table2Columns.size() ; j++)
+        {
+            if (table1Columns[i]->getName() == table2Columns[j]->getName()
+                && table1Columns[i]->toString() == table2Columns[j]->toString())
+            {
+                isMutualFirst[i] = true;
+                isMutualSecond[j] = true;
+                index1 = i;
+                index2 = j;
+            }
+        }
+    }
+
+    Table* newTable = new Table();
+    for (unsigned int i = 0; i < table1Columns.size(); i++)
+    {
+        newTable->addColumn(table1Columns[i]->getName(), *table1Columns[i]);
+    }
+
+    for (unsigned int i = 0; i < table1Columns[index1]->getSize() ; i++)
+    {
+        for (unsigned int j = 0; j < table2Columns[index2]->getSize(); i++)
+        {
+            if (table1Columns[index1]->getValueAt(i) == table2Columns[index2]->getValueAt(j))
+            {
+                table2.rowSwap(i, j);
+            }
+        }
+    }
+
+    for (unsigned int i = 0; i < table2Columns.size() && isMutualSecond[i] == false ; i++)
+    {
+        newTable->addColumn(table2Columns[i]->getName(), *table2Columns[i]);
+    }
+    return newTable;
+}
+
+void Database::rename(const std::string& oldTableName, const std::string& newName)///greshka, ako ne e unikalno
+{///vodi do promqna pri zapisvane posle vuv faila i v kataloga
+    unsigned int tableIndex = 0;
+    bool exists = true;
+    for (unsigned int i = 0; i < this->database.size(); i++)
+    {
+        if (this->database[i]->getName() == oldTableName)
+        {
+            tableIndex = i;
+            i++;
+        }
+        if (this->database[i]->getName() == newName)
+        {
+            exists = false;
+        }
+    }
+    ///ideq za zarejdane na vsichki sushtestvuvashti tablici
+    if (exists == true)
+    {
+        this->database[tableIndex]->setName(newName);
+    }
+    else
+    {
+        std::cout << "Table with name " << newName << " already exists!" << std::endl;
     }
 }
 
-Table& Database::update(const std::string& tableName, unsigned int columnSearch,
-    Field& valueSearch, unsigned int columnTarget, Field& valueTarget)
+unsigned int Database::count(const std::string& tableName, const unsigned int columnSearch,
+    const std::string& valueSearch)
 {
-    select(columnSearch, valueSearch, tableName);
-    ///smenqm na select column
-    ///select da vrushta redovete, koito e nameril(index ili stojnosti)
+    return select(columnSearch, valueSearch, tableName).size() - 1;
 }
 
-Table& Database::deletee(const std::string& tableName, unsigned int columnSearch,
-    Field& valueSearch) ///trie redovete, sudurzhashti value v kolona columnSearch
+double Database::aggregate(const std::string& tableName, unsigned int columnSearchIndex,
+    const std::string& value, unsigned int targetColumn, const Operation& operation)
 {
+    std::vector<unsigned int> indices = select(columnSearchIndex, value, tableName);
+    if (indices.size() == 1)
+    {
+        std::cout << "Nepravilni vhodni danni!" << std::endl;
+        return 0.0;
+    }
 
-}
+    if (this->database[indices[0]]->getTableData()[indices[1]]->toString() == "String")
+    {
+        std::cout << "Edna ili poveche koloni ne sa ot chislov tip ne e ot chislov tip!" << std::endl;
+        return 0;
+    }
 
-Table& Database::insert(const std::string& tableName, Field& rowValue1, Field& ...,
-    Field& rowValueN) ///nov red
-{
+    switch (operation)
+    {
+        case Operation::SUM: 
+            return this->database[indices[0]]->findSum(targetColumn, indices);
 
-}
+        case Operation::PRODUCT : 
+            return this->database[indices[0]]->findProduct(targetColumn, indices);
 
-Table Database::innerjoin(Table&, unsigned int table1Column, Table&, unsigned int table2Column)
-{
+        case Operation::MINIMUM : 
+            return this->database[indices[0]]->findMinimum(targetColumn, indices);
 
-}
+        case Operation::MAXIMUM : 
+            return this->database[indices[0]]->findMaximum(targetColumn, indices);
 
-Table& Database::rename(const std::string& oldTableName, const std::string& newName)///greshka, ako ne e unikalno
-{
-
-}
-
-unsigned int Database::count(const std::string& TableName, unsigned int columnSearch,
-    Field& valueSearch) ///broq na rows, za koito columnSearch sudurja value]
-{
-    ///kolko reda vrushta select
-}
-
-unsigned int Database::aggregate(const std::string& tableName, unsigned int columnSearchIndex,
-    Field& value, unsigned int targetColumn, Operation)
-{
-
+        default: 
+            std::cout << "Vuvedenata operaciq e nevalidna" << std::endl; 
+            return 0.0;
+    }
 }
 
 #endif // DATABASE_CPP

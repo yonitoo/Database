@@ -3,13 +3,10 @@
 
 void menu()
 {
-    switch///open, saveas
-    open
+    //switch open, saveas, vsichki komandi
 }
 
 int main()
 {
-
-
     return 0;
 }

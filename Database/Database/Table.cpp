@@ -2,6 +2,9 @@
 #include "Integer.h"
 #include "Double.h"
 #include "String.h"
+#include <iterator>
+#include <cassert>
+#include <algorithm>
 
 void Table::copy(const Table& other)
 {
@@ -101,6 +104,163 @@ void Table::setName(const std::string& name)
     this->name = name;
 }
 
+std::vector<std::vector<std::string>> Table::getRows() const
+{
+    std::vector<std::vector<std::string>> rows;
+    for (unsigned int i = 0; i < this->table[0]->getSize(); i++)
+    {
+        rows.push_back(std::vector<std::string>());
+    }
+    for (unsigned int i = 0; i < this->table[0]->getSize(); i++)
+    {
+        for (unsigned int j = 0; j < this->table.size(); j++)
+        {
+            rows[i].push_back(this->table[j]->getValueAt(i));
+        }
+    }
+    return rows;
+}
+
+void Table::addColumn(const std::string& columnName, const ColumnType& columnType)
+{
+    if (columnType.toString() == "Integer")
+    {
+        this->table.push_back(new Integer);
+    }
+    else if (columnType.toString() == "Double")
+    {
+        this->table.push_back(new Double);
+    }
+    else if (columnType.toString() == "String")
+    {
+        this->table.push_back(new String);
+    }
+    for (unsigned int i = 0; i < columnType.getVector().size(); i++)
+    {
+        this->table[this->table.size() - 1]->addElement(columnType.getVector()[i]);
+    }
+    this->table[this->table.size() - 1]->setName(columnName);
+}
+
+void Table::setValueAt(const unsigned int row, const unsigned int col, const std::string& value)
+{
+    this->table[col]->setValueAt(row, value);
+}
+
+void Table::removeRow(const unsigned int index)
+{
+    assert(index < this->getRows().size());
+    //TODO da fixna
+    this->getRows().erase(this->getRows().begin() + index);
+}
+
+void Table::addRow(const std::vector<std::string>& rowData)
+{
+    for (unsigned int i = 0; i < table.size(); i++)
+    {
+        if (i < rowData.size())
+        {
+            this->table[i]->addElement(rowData[i]);
+        }
+        else
+        {
+            this->table[i]->addElement("");
+        }
+    }
+}
+
+const std::vector<ColumnType*>& Table::getTableData() const
+{
+    return this->table;
+}
+
+void Table::rowSwap(const unsigned int index1, const unsigned int index2)
+{
+    std::string temp;
+    for (unsigned int i = 0; i < this->table.size(); i++)
+    {
+        temp = this->table[i]->getValueAt(index1);
+        this->table[i]->setValueAt(index1, this->table[i]->getValueAt(index2));
+        this->table[i]->setValueAt(index2, temp);
+    }
+}
+
+double Table::findSum(const unsigned int targetColumn, const std::vector<unsigned int>& indices) const
+{
+    double sum = 0;
+
+    for (unsigned int i = 1; i < indices.size(); i++)
+    {
+        if (this->table[indices[i]]->toString() == "String")
+        {
+            std::cout << "Edna ili poveche koloni ne sa ot chislov tip!" << std::endl;
+            return 0.0;
+        }
+
+        sum = sum + std::stod(this->table[indices[i]]->getValueAt(targetColumn));
+    }
+
+    return sum;
+}
+
+double Table::findProduct(const unsigned int targetColumn, const std::vector<unsigned int>& indices) const
+{
+    double product = 1;
+
+    for (unsigned int i = 1; i < indices.size(); i++)
+    {
+        if (this->table[indices[i]]->toString() == "String")
+        {
+            std::cout << "Edna ili poveche koloni ne sa ot chislov tip!" << std::endl;
+            return 0.0;
+        }
+        product = product*std::stod(this->table[indices[i]]->getValueAt(targetColumn));
+    }
+    return product;
+}
+
+double Table::findMinimum(const unsigned int targetColumn, const std::vector<unsigned int>& indices) const
+{
+    double eps = 2e-52, min = std::stod(this->table[indices[1]]->getValueAt(targetColumn));
+
+    for (unsigned int i = 2; i < indices.size(); i++)
+    {
+        if (this->table[indices[i]]->toString() == "String")
+        {
+            std::cout << "Edna ili poveche koloni ne sa ot chislov tip!" << std::endl;
+            return 0.0;
+        }
+
+        if (min - std::stod(this->table[indices[i]]->getValueAt(targetColumn)) > eps)
+        {
+            min = std::stod(this->table[indices[i]]->getValueAt(targetColumn));
+        }
+    }
+
+    return min;
+}
+
+double Table::findMaximum(const unsigned int targetColumn, const std::vector<unsigned int>& indices) const
+{
+    double eps = 2e-52, max = std::stod(this->table[indices[1]]->getValueAt(targetColumn));
+
+    for (unsigned int i = 2; i < indices.size(); i++)
+    {
+        if (this->table[indices[i]]->toString() == "String")
+        {
+            std::cout << "Edna ili poveche koloni ne sa ot chislov tip!" << std::endl;
+            return 0.0;
+        }
+
+        if (std::stod(this->table[indices[i]]->getValueAt(targetColumn)) - max > eps)
+        {
+            max = std::stod(this->table[indices[i]]->getValueAt(targetColumn));
+        }
+    }
+
+    return max;
+}
+
 void Table::printColumnTypes() const
 {
     for(unsigned int i = 0 ; i < this->table.size() ; i++)
@@ -183,7 +343,7 @@ bool Table::read(std::istream& in)
     unsigned int index = 0;
     while (std::getline(in, line, ' '))
     {
-        in >> table[index]
+        in >> table[index];
     }
     /*std::string name;
     in >> name;
@@ -219,4 +379,5 @@ bool Table::read(std::istream& in)
         }
         return false;
     }*/
+    return false;
 }

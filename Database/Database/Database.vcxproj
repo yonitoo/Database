@@ -138,39 +138,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ColumnType.h" />
-    <ClInclude Include="..\..\Database.h" />
-    <ClInclude Include="..\..\Double.h" />
-    <ClInclude Include="..\..\Integer.h" />
-    <ClInclude Include="..\..\String.h" />
-    <ClInclude Include="..\..\Table.h" />
     <ClInclude Include="ColumnType.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Double.h" />
-    <ClInclude Include="FieldType.h" />
     <ClInclude Include="Integer.h" />
+    <ClInclude Include="Operation.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ColumnType.cpp" />
-    <ClCompile Include="..\..\Database.cpp" />
-    <ClCompile Include="..\..\Double.cpp" />
-    <ClCompile Include="..\..\Integer.cpp" />
-    <ClCompile Include="..\..\main.cpp" />
-    <ClCompile Include="..\..\String.cpp" />
-    <ClCompile Include="..\..\Table.cpp" />
     <ClCompile Include="ColumnType.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Double.cpp" />
-    <ClCompile Include="FieldType.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="Table.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Double.o" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

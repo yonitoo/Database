@@ -33,7 +33,9 @@ class Database
         void rename(const std::string&, const std::string&);
         unsigned int count(const std::string&, const unsigned int, const std::string&);
         double aggregate(const std::string&, unsigned int, const std::string&, unsigned int, const Operation&);
-                     ///operacii : sum, product, min, max
+
+        void write(std::ostream&) const;
+        bool read(std::istream&);
 };
 
 #endif // DATABASE_H

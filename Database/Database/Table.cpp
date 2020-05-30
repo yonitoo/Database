@@ -32,6 +32,8 @@ void Table::copy(const Table& other)
             this->table[i]->addElement(other.table[i]->getValueAt(j));
         }
     }
+
+    this->path = other.path;
 }
 
 void Table::erase()
@@ -43,36 +45,8 @@ void Table::erase()
     this->table.clear();
 }
 
-Table::Table() : name(""),table()
+Table::Table() : name(""),table(), path("")
 {
-}
-
-Table::Table(const std::string& name, const std::vector<ColumnType*> table)
-{
-    this->name = name;
-    for(unsigned int i = 0 ; i < table.size() ; i++)
-    {
-        if (table[i]->toString() == "Integer")
-        {
-            this->table.push_back(new Integer);
-        }
-        else if (table[i]->toString() == "Double")
-        {
-            this->table.push_back(new Double);
-        }
-        else if (table[i]->toString() == "String")
-        {
-            this->table.push_back(new String);
-        }
-    }
-
-    for(unsigned int i = 0 ; i < this->table.size() ; i++)
-    {
-        for(unsigned int j = 0 ; j < this->table[i]->getSize() ; j++)
-        {
-            this->table[i]->addElement(table[i]->getValueAt(j));
-        }
-    }
 }
 
 Table::Table(const Table& other)
@@ -119,6 +93,16 @@ std::vector<std::vector<std::string>> Table::getRows() const
         }
     }
     return rows;
+}
+
+const std::string& Table::getPath() const
+{
+    return this->path;
+}
+
+void Table::setPath(const std::string& path)
+{
+    this->path = path;
 }
 
 void Table::addColumn(const std::string& columnName, const ColumnType& columnType)
@@ -309,75 +293,103 @@ void Table::printByPages(unsigned int counter) const
     }
 }
 
-void Table::print(std::ostream& out) const
+void Table::write(std::ostream& out) const
 {
-    if(!out)
+    for (unsigned int i = 0; i < this->table.size(); i++)
     {
-        return;
-    }
-    out << this->name << std::endl;
-    for(unsigned int i = 0 ; i < this->table[0]->getSize() ; i++)
-    {
-        for(unsigned int j = 0 ; j < this->table.size() ; j++)
+        out << this->table[i]->getName() << "|" << this->table[i]->toString();
+        if (i != this->table.size() - 1)
         {
-            std::cout << this->table[j]->getValueAt(i);
+            out << '|';
+        }
+    }
+    out << std::endl;
+
+    for (unsigned int i = 0; i < this->table[0]->getSize(); i++)
+    {
+        for (unsigned int j = 0; j < this->table.size(); j++)
+        {
+            out << this->table[j]->getValueAt(i);
             if (j != this->table.size() - 1)
             {
-                std::cout << " ";
+                out << '|';
             }
         }
-        std::cout << std::endl;
+        out << std::endl;
     }
 }
 
 bool Table::read(std::istream& in)
 {
-    if(!in)
+    if (!in)
     {
         return false;
     }
     std::string name;
+    std::string columnType;
     std::string line;
-    std::vector<std::string> table;
-    std::getline(in, name);
-    unsigned int index = 0;
-    while (std::getline(in, line, ' '))
-    {
-        in >> table[index];
-    }
-    /*std::string name;
-    in >> name;
     std::vector<ColumnType*> table;
-    for(unsigned int i = 0 ; i < this->table.size() ; i++)
+    unsigned int index = 0;
+    char currentCharacter = '\0';
+    std::string currentString;
+    while (currentCharacter != '\n' && currentCharacter != '\r\n' && currentCharacter != '\r')
     {
-        table[i]->read(in);
-    }
-    in.get();
-
-    if(in)
-    {
-        this->setName(name);
-        for(unsigned int i = 0 ; i < table[0].size() ; i++)
+        currentCharacter = in.get();
+        name = "";
+        columnType = "";
+        while (currentCharacter != '|')
         {
-            for(unsigned int j = 0 ; j < this->table[i]->getSize() ; j++)
+            if (index % 2 == 0)
             {
-                this->table[i]->addElement(j) =
+                name += currentCharacter;
+            }
+            else
+            {
+                columnType += currentCharacter;
+            }
+            currentCharacter = in.get();
+            if (currentCharacter == '\n' || currentCharacter == '\r\n' || currentCharacter == '\r')
+            {
+                break;
             }
         }
-        return true;
+        if (index % 2 == 1)
+        {
+            if (columnType == "Integer")
+            {
+                Integer* column = new Integer;
+                column->setName(name);
+                table.push_back(column);
+            }
+            else if (columnType == "Double")
+            {
+                Double* column = new Double;
+                column->setName(name);
+                table.push_back(column);
+            }
+            else
+            {
+                String* column = new String;
+                column->setName(name);
+                table.push_back(column);
+            }
+        }
+        index++;
     }
-    else
+    if (!in)
     {
-        if(in.eof())
-        {
-            std::cout << "The end of file has been reached!" << std::endl;
-        }
-        else
-        {
-            in.clear();
-            in.ignore(1024, '\n');
-        }
         return false;
-    }*/
-    return false;
+    }
+
+    index = 0;
+    while (std::getline(in, line, '|'))
+    {
+        ///razmestvane, da se OPRAVI!!!
+        std::cout << table[index % table.size()]->toString() << std::endl;
+        std::cout << line << std::endl;
+        table[index % table.size()]->addElement(line);
+        index++;
+    }
+    this->table = table;
+    return true;
 }

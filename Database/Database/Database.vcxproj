@@ -155,6 +155,10 @@
     <ClCompile Include="String.cpp" />
     <ClCompile Include="Table.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="dbtest.txt" />
+    <Text Include="test.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

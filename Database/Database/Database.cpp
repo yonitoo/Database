@@ -102,7 +102,7 @@ void Database::exportt(const std::string& tableName, const std::string& fileName
         {
             if (this->database[i]->getName() == tableName)
             {
-                this->database[i]->print(file);
+                this->database[i]->write(file);
                 return;
             }
         }
@@ -332,6 +332,45 @@ double Database::aggregate(const std::string& tableName, unsigned int columnSear
         default: 
             std::cout << "Vuvedenata operaciq e nevalidna" << std::endl; 
             return 0.0;
+    }
+}
+
+void Database::write(std::ostream& out) const
+{
+    for (unsigned int i = 0; i < this->database.size(); i++)
+    {
+        out << this->database[i]->getName() << "|" << this->database[i]->getPath() << std::endl;
+    }
+}
+
+bool Database::read(std::istream& in)
+{
+    if (!in)
+    {
+        return false;
+    }
+    std::string line;
+    std::fstream tableFile;
+    unsigned int index = 0;
+    std::string name;
+    while (std::getline(in, line, '|'))
+    {
+        if (index % 2 == 0)
+        {
+            name = line;
+        }
+        if (index % 2 == 1)
+        {
+            Table* table = new Table;
+            table->setName(name);
+            table->setPath(line);
+            tableFile.open(line);
+            tableFile.seekg(0, tableFile.beg);
+            table->read(tableFile);
+            tableFile.close();
+            this->database.push_back(table);
+        }
+        index++;
     }
 }
 

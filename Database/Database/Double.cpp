@@ -74,48 +74,6 @@ void Double::addElement(const std::string& str)
     this->str.push_back(str);
 }
 
-void Double::print(std::ostream& out) const
-{
-    if (!out)
-    {
-        return;
-    }
-    out << this->getName() << std::endl;
-
-    for (unsigned int i = 0; i < this->str.size(); i++)
-    {
-        out << this->str[i] << std::endl;
-    }
-}
-
-bool Double::read(std::istream& in)
-{
-    if (!in)
-    {
-        return false;
-    }
-    char sign;
-    std::string strin;
-    while (in.get() != '\t')
-    {
-        in >> sign;
-        if (sign != '+' && sign != '-' && (sign < '0' || sign > '9'))
-        {
-            return false;
-        }
-        in >> strin;
-        if (in)
-        {
-            this->str.push_back(sign + strin);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 std::string Double::toString() const
 {
     return "Double";

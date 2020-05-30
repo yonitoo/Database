@@ -8,13 +8,13 @@ class Table
     private:
         std::string name;
         std::vector<ColumnType*> table;
+        std::string path;
 
         void copy(const Table&);
         void erase();
 
     public:
         Table();
-        Table(const std::string&, const std::vector<ColumnType*>);
         Table(const Table&);
         Table& operator=(const Table&);
         ~Table();
@@ -22,6 +22,9 @@ class Table
         std::string getName() const;
         void setName(const std::string&);
         std::vector<std::vector<std::string>> getRows() const;
+        const std::string& getPath() const;
+        void setPath(const std::string&);
+
         void addColumn(const std::string&, const ColumnType&);
         void setValueAt(const unsigned int, const unsigned int, const std::string&);
         void removeRow(const unsigned int);
@@ -36,7 +39,8 @@ class Table
 
         void printColumnTypes() const;
         void printByPages(unsigned int) const;
-        void print(std::ostream&) const;
+
+        void write(std::ostream&) const;
         bool read(std::istream&);
 };
 

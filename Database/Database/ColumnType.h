@@ -25,9 +25,6 @@ class ColumnType
         virtual unsigned int getSize() const = 0;
         virtual const std::vector<std::string>& getVector() const;
         virtual void addElement(const std::string&) = 0;
-
-        virtual void print(std::ostream&) const = 0;
-        virtual bool read(std::istream&) = 0;
         virtual std::string toString() const = 0;
 };
 

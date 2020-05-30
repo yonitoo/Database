@@ -80,47 +80,6 @@ void String::addElement(const std::string& str)
     this->str.push_back(str);
 }
 
-void String::print(std::ostream& out) const
-{
-    if(!out)
-    {
-        return;
-    }
-    out << this->getName() << std::endl;
-    for (unsigned int i = 0; i < this->str.size(); i++)
-    {
-        out << '"' << this->str[i] << '"' << std::endl;
-    }
-}
-
-bool String::read(std::istream& in)
-{
-    if (!in)
-    {
-        return false;
-    }
-    
-    std::string currentStr;
-    while (in.get() != '\t')
-    {
-        in >> currentStr;
-        if (currentStr[0] != '"' || currentStr[currentStr.size() - 1] != '"')
-        {
-            return false;
-        }
-
-        if (in)
-        {
-            this->str.push_back(currentStr);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 std::string String::toString() const
 {
 	return "String";

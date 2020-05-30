@@ -1,0 +1,4 @@
+id|Integer|name|String|Age|Double
+1|Ivan|13.5
+2|Gosho|15.5
+3|Zoro|56.314

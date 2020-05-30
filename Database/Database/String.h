@@ -21,9 +21,6 @@ class String : public ColumnType
         virtual std::string getValueAt(const unsigned int) const override;
         virtual unsigned int getSize() const override;
         virtual void addElement(const std::string&) override;
-
-        virtual void print(std::ostream&) const override;
-        virtual bool read(std::istream&) override;
         virtual std::string toString() const override;
 };
 

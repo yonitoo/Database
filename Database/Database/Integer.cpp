@@ -66,51 +66,10 @@ void Integer::addElement(const std::string& str)
         this->str.push_back("NULL");
         return;
     }
+    std::cout << str << std::endl;
     assert(str[0] == '+' || str[0] == '-' ||
         (str[0] >= '0' && str[0] <= '9'));
     this->str.push_back(str);
-}
-
-void Integer::print(std::ostream& out) const
-{
-    if (!out)
-    {
-        return;
-    }
-    out << this->getName() << std::endl;
-
-    for (unsigned int i = 0; i < this->str.size(); i++)
-    {
-        out << this->str[i] << " ";
-    }
-}
-
-bool Integer::read(std::istream& in)
-{
-    if (!in)
-    {
-        return false;
-    }
-    char sign;
-    std::string strin;
-    while (in.get() != '\t')
-    {
-        in >> sign;
-        if (sign != '+' && sign != '-' && (sign < '0' || sign > '9'))
-        {
-            return false;
-        }
-        in >> strin;
-        if (in)
-        {
-            this->str.push_back(sign + strin);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    return true;
 }
 
 std::string Integer::toString() const

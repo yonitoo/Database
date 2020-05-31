@@ -141,6 +141,7 @@
     <ClInclude Include="ColumnType.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="Double.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="String.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="ColumnType.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Double.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="String.cpp" />
@@ -158,6 +160,7 @@
   <ItemGroup>
     <Text Include="dbtest.txt" />
     <Text Include="test.txt" />
+    <Text Include="test2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

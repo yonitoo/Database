@@ -10,14 +10,15 @@ class Database
         std::vector<Table*> database;
 
         void copy(const Database&);
-        void erase();
 
     public:
         Database();
         Database& operator=(const Database&);
         ~Database();
 
-        Database& import(const std::string&);///char* file name + dobavq se v kataloga
+        void erase();
+
+        Database& import(const std::string&);
         void showtables();
         void describe(const std::string&) const;
         void print(const std::string&) const;

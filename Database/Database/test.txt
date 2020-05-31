@@ -1,4 +1,13 @@
 id|Integer|name|String|Age|Double
-1|Ivan|13.5
-2|Gosho|15.5
-3|Zoro|56.314
+1|Ivan|13.5|
+2|Gosho|15.5|
+3|Dimo|5|
+4|Simeon|3.5|
+5|Dara|1|
+6|Gergina|54|
+7|Sasho|13|
+8|Alex|14|
+9|Victoria|52|
+10|Yoan|47|
+11|Iva|12|
+12|Zora|20|

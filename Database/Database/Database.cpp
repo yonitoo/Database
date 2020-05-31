@@ -1,6 +1,3 @@
-#ifndef DATABASE_CPP
-#define DATABASE_CPP
-
 #include <fstream>
 #include <iterator>
 #include "Database.h"
@@ -17,7 +14,7 @@ void Database::erase()
 {
     for(unsigned int i = 0 ; i < this->database.size() ; i++)
     {
-        this->database[i]->~Table();
+        delete this->database[i];
     }
     this->database.clear();
 }
@@ -42,23 +39,32 @@ Database::~Database()
 }
 
 Database& Database::import(const std::string& fileName)///char* file name + dobavq se v kataloga
-{/*
+{
     std::fstream file;
-    file.open(fileName.c_str(), std::fstream::out | std::fstream::trunc);
+    file.open(fileName.c_str(), std::fstream::in);
+    file.seekg(0, file.beg);
     if (file.is_open())
     {
-        Table table;
-        table.read(file);
-        this->database.push_back(&table);
+        Table* table = new Table;
+        table->read(file);
+        for (unsigned int i = 0; i < this->database.size(); i++)
+        {
+            if (this->database[i]->getName() == table->getName() ||
+                this->database[i]->getPath() == table->getPath())
+            {
+                std::cout << "Table with this name or path already exists" << std::endl;
+                return *this;
+            }
+        }
+        this->database.push_back(table);
     }
     file.close();
     std::string catalogueFile = "Catalogue.txt";
-    file.open(catalogueFile.c_str(), std::fstream::in);
+    file.open(catalogueFile.c_str(), std::fstream::out | std::fstream::trunc);
     if (file.is_open())
     {
-        file.write(;
-        return;
-    }*/
+        this->write(file);
+    }
     return *this;
 }
 
@@ -133,7 +139,7 @@ std::vector<unsigned int> Database::select(unsigned int columnN, const std::stri
         }
     }
 
-    for (unsigned int i = 0; i < indices.size(); i++)
+    for (unsigned int i = 1; i < indices.size(); i++)
     {
         for (unsigned int j = 0; j < this->database[tableIndex]->getRows()[indices[i]].size(); j++)
         {
@@ -339,7 +345,7 @@ void Database::write(std::ostream& out) const
 {
     for (unsigned int i = 0; i < this->database.size(); i++)
     {
-        out << this->database[i]->getName() << "|" << this->database[i]->getPath() << std::endl;
+        out << this->database[i]->getName() << '|' << this->database[i]->getPath() << '|' << std::endl;
     }
 }
 
@@ -364,14 +370,21 @@ bool Database::read(std::istream& in)
             Table* table = new Table;
             table->setName(name);
             table->setPath(line);
-            tableFile.open(line);
+            tableFile.open(line, std::fstream::in);
             tableFile.seekg(0, tableFile.beg);
             table->read(tableFile);
             tableFile.close();
             this->database.push_back(table);
         }
         index++;
+        if (index % 2 == 0)
+        {
+            in.get();
+        }
     }
+    if (!in)
+    {
+        return false;
+    }
+    return true;
 }
-
-#endif // DATABASE_CPP

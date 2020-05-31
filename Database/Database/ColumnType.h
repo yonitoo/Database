@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 
-
-///TODO da dobavq NULL stojnosti
 class ColumnType
 {
     protected:

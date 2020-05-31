@@ -264,6 +264,30 @@ void Table::printByPages(unsigned int counter) const
     unsigned int rowSize = this->table[0]->getSize();
     while (true)
     {
+        for (int i = counter; i < counter + 10 && i < rowSize; i++)
+        {
+            for (unsigned int j = 0; j < this->table.size(); j++)
+            {
+                std::cout << this->table[j]->getValueAt(i);
+                if (j != this->table.size() - 1)
+                {
+                    std::cout << " ";
+                }
+            }
+            std::cout << std::endl;
+        }
+        if (rowSize < 10)
+        {
+            std::cout << "Cancel" << std::endl;
+        }
+        else if(counter + 10 > rowSize)
+        {
+            std::cout << "Previous/Cancel" << std::endl;
+        }
+        else if (counter < 10 && rowSize > counter)
+        {
+            std::cout << "Next/Cancel" << std::endl;
+        }
         std::getline(std::cin, command);
         if (command != "Next" && command != "Previous")
         {
@@ -276,19 +300,10 @@ void Table::printByPages(unsigned int counter) const
         else
         {
             counter -= 10;
-        }
-
-        for (unsigned int i = counter; i < counter + 10 && i < rowSize; i++)
-        {
-            for (unsigned int j = 0; j < this->table.size(); j++)
+            if (counter < 0)
             {
-                std::cout << this->table[j]->getValueAt(i);
-                if (j != this->table.size() - 1)
-                {
-                    std::cout << " ";
-                }
+                counter = 0;
             }
-            std::cout << std::endl;
         }
     }
 }
@@ -297,11 +312,7 @@ void Table::write(std::ostream& out) const
 {
     for (unsigned int i = 0; i < this->table.size(); i++)
     {
-        out << this->table[i]->getName() << "|" << this->table[i]->toString();
-        if (i != this->table.size() - 1)
-        {
-            out << '|';
-        }
+        out << this->table[i]->getName() << "|" << this->table[i]->toString() << '|';
     }
     out << std::endl;
 
@@ -309,11 +320,7 @@ void Table::write(std::ostream& out) const
     {
         for (unsigned int j = 0; j < this->table.size(); j++)
         {
-            out << this->table[j]->getValueAt(i);
-            if (j != this->table.size() - 1)
-            {
-                out << '|';
-            }
+            out << this->table[j]->getValueAt(i) << '|';
         }
         out << std::endl;
     }
@@ -384,11 +391,12 @@ bool Table::read(std::istream& in)
     index = 0;
     while (std::getline(in, line, '|'))
     {
-        ///razmestvane, da se OPRAVI!!!
-        std::cout << table[index % table.size()]->toString() << std::endl;
-        std::cout << line << std::endl;
         table[index % table.size()]->addElement(line);
         index++;
+        if (index % table.size() == 0)
+        {
+            in.get();
+        }
     }
     this->table = table;
     return true;

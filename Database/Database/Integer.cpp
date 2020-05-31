@@ -66,7 +66,6 @@ void Integer::addElement(const std::string& str)
         this->str.push_back("NULL");
         return;
     }
-    std::cout << str << std::endl;
     assert(str[0] == '+' || str[0] == '-' ||
         (str[0] >= '0' && str[0] <= '9'));
     this->str.push_back(str);
